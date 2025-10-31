@@ -1,25 +1,34 @@
 <!doctype html><html lang="ru"><head>
-<meta charset="utf-8"><link rel="stylesheet" href="style.css"></head><body>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="style.css">
+<title>Маршрут по дням</title></head><body>
+
 <header class="nav"><div class="inner container">
   <div class="brand"><span class="dot"></span>Маршрут</div>
-  <a href="index.html">Назад</a>
+  <nav><a href="index.html">Назад</a></nav>
 </div></header>
 
 <main class="container hero">
-<h1 class="h1">План по дням</h1>
-<div class="card"><pre>
-31.10 — Прибытие, ужин, отдых
-01.11 — Прогулка, Terma Bania
-02.11 — Kotelnica, Пре́лом Бялки
-03.11 — Переезд в Zakopane
-04.11 — Morskie Oko (поход)
-05.11 — Gubałówka → Białka
-06.11 — SPA, отдых
-07.11 — Rusinowa Polana
-08.11 — Nowy Targ, термы
-09.11 — Выезд
-</pre></div>
+  <div class="h1">Маршрут 31.10 — 09.11</div>
+  <div class="card">
+    <table class="table">
+      <thead><tr><th>Дата</th><th>Локация</th><th>План</th><th>D-Day</th></tr></thead>
+      <tbody>
+        <tr><td>31.10 (пт)</td><td>Białka</td><td>Прибытие 16:55 → такси до Grapa 29 → ужин → отдых</td><td><div class="dday" data-date="2025-10-31"><span class="num">—</span> <span class="label">дн. осталось</span></div></td></tr>
+        <tr><td>01.11 (сб)</td><td>Białka</td><td>Прогулка вдоль реки → Terma Bania вечером</td><td></td></tr>
+        <tr><td>02.11 (вс)</td><td>Białka</td><td>Kotelnica (виды) → Przełom Białki</td><td></td></tr>
+        <tr><td>03.11 (пн)</td><td>Zakopane</td><td>Переезд → Krupówki → SPA</td><td><div class="dday" data-date="2025-11-03"><span class="num">—</span> <span class="label">дн. осталось</span></div></td></tr>
+        <tr><td>04.11 (вт)</td><td>Zakopane</td><td><b>Morskie Oko</b> (Palenica → Wodogrzmoty → Morskie Oko)</td><td><div class="dday" data-date="2025-11-04"><span class="num">—</span> <span class="label">дн. осталось</span></div></td></tr>
+        <tr><td>05.11 (ср)</td><td>Zakopane → Białka</td><td>Gubałówka утром → возвращение в Białka</td><td></td></tr>
+        <tr><td>06.11 (чт)</td><td>Białka</td><td>Чил-день: сауна/массаж</td><td></td></tr>
+        <tr><td>07.11 (пт)</td><td>Białka</td><td>Rusinowa Polana или ATV/buggy</td><td></td></tr>
+        <tr><td>08.11 (сб)</td><td>Białka</td><td>Nowy Targ + финальные термы</td><td></td></tr>
+        <tr><td>09.11 (вс)</td><td>—</td><td>Выезд до 11:00</td><td><div class="dday" data-date="2025-11-09"><span class="num">—</span> <span class="label">дн. осталось</span></div></td></tr>
+      </tbody>
+    </table>
+  </div>
 </main>
 
-<script src="auth.js"></script><script src="app.js"></script>
+<footer class="container">Маршрут · D-Day</footer>
+<script src="auth.js" defer></script><script src="app.js" defer></script>
 </body></html>
