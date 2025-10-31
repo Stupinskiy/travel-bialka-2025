@@ -1,4 +1,4 @@
-const PASSWORD_SHA256 = "87b5c5c234a5b7270555abbdeacfea39806356fa09ad8e37ca91d17876b3a4cd";
+const PASSWORD_SHA256 = "54a5b2c1af6dfbfa5edb252df5f2cb316adcc64832d5685a769ea29ee97f1464";
 const PASS_KEY = "travel.pass.ok";
 
 async function sha256(text){
