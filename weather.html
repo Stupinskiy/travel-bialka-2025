@@ -37,8 +37,8 @@ async function meteo(lat,lon){
   ).join('');
 }
 (async()=>{
-  document.getElementById("w1").innerHTML = `<table class="table"><tbody>${await meteo(49.386,20.106)}</tbody></table>`;
-  document.getElementById("w2").innerHTML = `<table class="table"><tbody>${await meteo(49.299,19.949)}</tbody></table>`;
+  document.getElementById("w1").innerHTML = `<div class="table-responsive"><table class="table"><tbody>${await meteo(49.386,20.106)}</tbody></table></div>`;
+  document.getElementById("w2").innerHTML = `<div class="table-responsive"><table class="table"><tbody>${await meteo(49.299,19.949)}</tbody></table></div>`;
 })();
 </script>
 
