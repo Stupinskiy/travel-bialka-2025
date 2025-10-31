@@ -44,6 +44,42 @@ window.installPWA = installPWA;
   });
 })();
 
+// ===== Mobile navigation toggle =====
+window.addEventListener('DOMContentLoaded', ()=>{
+  document.querySelectorAll('.nav').forEach(header=>{
+    const toggle = header.querySelector('.nav-toggle');
+    const menu = header.querySelector('nav');
+    if (!toggle || !menu) return;
+
+    const mq = window.matchMedia('(max-width: 720px)');
+    const close = ()=>{
+      toggle.setAttribute('aria-expanded','false');
+      delete header.dataset.open;
+    };
+    const open = ()=>{
+      toggle.setAttribute('aria-expanded','true');
+      header.dataset.open = 'true';
+    };
+
+    toggle.addEventListener('click', (ev)=>{
+      ev.stopPropagation();
+      if (toggle.getAttribute('aria-expanded') === 'true'){ close(); }
+      else { open(); }
+    });
+
+    menu.querySelectorAll('a').forEach(link=>{
+      link.addEventListener('click', ()=>{ if (mq.matches) close(); });
+    });
+
+    mq.addEventListener('change', (ev)=>{ if (!ev.matches) close(); });
+
+    document.addEventListener('click', (ev)=>{
+      if (!mq.matches) return;
+      if (!header.contains(ev.target) && header.dataset.open){ close(); }
+    });
+  });
+});
+
 // ===== D-Day timers (elements with data-date="YYYY-MM-DD") =====
 function setupDDay(){
   const nodes = document.querySelectorAll('.dday[data-date]');
