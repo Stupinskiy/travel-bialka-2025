@@ -6,7 +6,7 @@
   --accent-strong:#1d4ed8;
   --card:#ffffff;
   --border:#dce3ee;
-  --radius:20px;
+  --radius:clamp(16px,4.6vw,20px);
   --shadow:0 18px 40px rgba(15,23,42,.08);
 }
 
@@ -33,7 +33,11 @@ a{color:inherit}
 
 a,button{transition:all .18s ease}
 
-.container{max-width:1080px;margin:0 auto;padding:32px 24px}
+.container{
+  width:min(100%,1080px);
+  margin:0 auto;
+  padding:clamp(20px,4vw,32px) clamp(16px,5vw,24px);
+}
 
 .nav{
   position:sticky;
@@ -44,7 +48,14 @@ a,button{transition:all .18s ease}
   border-bottom:1px solid rgba(220,227,238,.7);
 }
 
-.nav .inner{display:flex;gap:18px;align-items:center;justify-content:space-between;padding:18px 22px}
+.nav .inner{
+  display:flex;
+  gap:clamp(16px,4vw,18px);
+  align-items:center;
+  justify-content:space-between;
+  padding:clamp(14px,3.6vw,18px) clamp(18px,5vw,22px);
+  position:relative;
+}
 
 .nav nav{display:flex;gap:10px;flex-wrap:wrap}
 
@@ -63,21 +74,46 @@ a,button{transition:all .18s ease}
   border-color:rgba(59,130,246,.2);
 }
 
+.nav-toggle{
+  display:none;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  padding:10px 14px;
+  border-radius:14px;
+  border:1px solid transparent;
+  background:rgba(255,255,255,.55);
+  cursor:pointer;
+}
+
+.nav-toggle span{
+  display:block;
+  width:18px;
+  height:2px;
+  border-radius:999px;
+  background:var(--fg);
+  transition:transform .2s ease,opacity .2s ease;
+}
+
+.nav[data-open="true"] .nav-toggle span:nth-child(1){transform:translateY(4px) rotate(45deg)}
+.nav[data-open="true"] .nav-toggle span:nth-child(2){opacity:0}
+.nav[data-open="true"] .nav-toggle span:nth-child(3){transform:translateY(-4px) rotate(-45deg)}
+
 .brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:clamp(18px,2.1vw,22px)}
 
 .brand .dot{width:14px;height:14px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-strong));box-shadow:0 0 0 5px rgba(59,130,246,.2)}
 
-.hero{padding:64px 0}
+.hero{padding-block:clamp(48px,10vw,72px)}
 
 .card{
   background:var(--card);
   border:1px solid rgba(220,227,238,.7);
   border-radius:var(--radius);
   box-shadow:var(--shadow);
-  padding:28px;
+  padding:clamp(22px,5vw,28px);
   display:flex;
   flex-direction:column;
-  gap:18px;
+  gap:clamp(16px,4vw,20px);
 }
 
 @media (hover:hover){
@@ -85,7 +121,7 @@ a,button{transition:all .18s ease}
   .card:hover{transform:translateY(-4px);box-shadow:0 24px 48px rgba(15,23,42,.12)}
 }
 
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:clamp(16px,4vw,24px)}
 
 a.card{color:inherit;text-decoration:none;height:100%}
 
@@ -119,13 +155,15 @@ a.card{color:inherit;text-decoration:none;height:100%}
 
 .badge{display:inline-block;padding:4px 12px;border-radius:999px;background:rgba(59,130,246,.12);color:var(--accent-strong);font-weight:600;letter-spacing:.01em}
 
-.table{width:100%;border-collapse:collapse;font-size:clamp(14px,1.5vw,16px)}
+.table{width:100%;border-collapse:collapse;font-size:clamp(13px,1.4vw,16px)}
 
 .table th,.table td{border-bottom:1px solid rgba(220,227,238,.9);padding:14px 16px;text-align:left;vertical-align:top}
 
 .table thead th{font-weight:700;color:var(--fg);background:rgba(226,232,240,.5)}
 
-.table-responsive{overflow-x:auto;border-radius:var(--radius);}
+.table-responsive{overflow-x:auto;border-radius:var(--radius);scrollbar-width:thin}
+.table-responsive::-webkit-scrollbar{height:6px}
+.table-responsive::-webkit-scrollbar-thumb{background:rgba(148,163,184,.5);border-radius:999px}
 
 .kbd{font:600 12px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;background:#111827;color:#e5e7eb;padding:4px 8px;border-radius:8px}
 
@@ -176,6 +214,9 @@ html[data-theme="dark"] .nav{background:rgba(11,18,32,.9);border-bottom:1px soli
 html[data-theme="dark"] .nav a{background:rgba(15,23,42,.6);border-color:rgba(30,41,59,.7)}
 html[data-theme="dark"] .nav a:hover,html[data-theme="dark"] .nav a:focus-visible{background:rgba(96,165,250,.2);border-color:rgba(96,165,250,.3)}
 html[data-theme="dark"] .table thead th{background:rgba(30,41,59,.6)}
+html[data-theme="dark"] .nav-toggle{background:rgba(15,23,42,.65);border-color:rgba(30,41,59,.7)}
+html[data-theme="dark"] .nav-toggle span{background:var(--fg)}
+html[data-theme="dark"] .nav[data-open="true"] .nav-toggle{background:rgba(59,130,246,.18);border-color:rgba(96,165,250,.35)}
 
 @media (prefers-color-scheme: dark){
   :root{color-scheme:dark;}
@@ -233,23 +274,49 @@ html[data-theme="dark"] #splash{background:rgba(11,18,32,.92)}
 
 #splash .sub{margin-top:14px;color:var(--muted)}
 
-/* Responsive tweaks */
 @media (max-width:900px){
-  .container{padding:28px 20px}
-  .hero{padding:52px 0}
+  .grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
 }
 
 @media (max-width:720px){
-  .nav .inner{flex-direction:column;align-items:flex-start;gap:12px;padding:16px 18px}
-  .nav nav{width:100%}
-  .nav a{padding:8px 14px}
-  .container{padding:24px 18px}
-  .card{padding:24px}
-  .grid{gap:18px}
+  .nav .inner{gap:12px}
+  .nav nav{
+    position:absolute;
+    top:100%;
+    right:clamp(16px,5vw,22px);
+    left:clamp(16px,5vw,22px);
+    margin-top:10px;
+    padding:16px;
+    flex-direction:column;
+    background:var(--card);
+    border:1px solid rgba(220,227,238,.85);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(-8px);
+    pointer-events:none;
+    gap:8px;
+    z-index:5;
+  }
+  html[data-theme="dark"] .nav nav{border-color:rgba(30,41,59,.8)}
+  .nav[data-open="true"] nav{
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0);
+    pointer-events:auto;
+  }
+  .nav a{width:100%;padding:10px 14px}
+  .nav-toggle{display:inline-flex}
+  .brand{font-size:clamp(18px,5vw,22px)}
+  .grid{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+  .hero{padding-block:clamp(40px,12vw,56px)}
 }
 
 @media (max-width:540px){
-  .hero{padding:44px 0}
   .grid{grid-template-columns:1fr}
-  .card{padding:22px}
+  .container{padding:clamp(18px,6vw,24px) clamp(14px,6vw,20px)}
+  .brand .dot{width:12px;height:12px}
+  .nav-toggle{padding:10px 12px}
 }
+.nav[data-open="true"] .nav-toggle{border-color:rgba(59,130,246,.35);background:rgba(59,130,246,.12)}
