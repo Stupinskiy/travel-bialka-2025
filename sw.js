@@ -1,9 +1,9 @@
-const CACHE = 'travel-bialka-2025-v2';
+const CACHE = 'travel-bialka-2025-v5';
 const CORE = [
   './',
-  './index.html','./login.html','./itinerary.html','./map.html','./checklists.html',
+  './index.html','./itinerary.html','./map.html','./checklists.html',
   './bookings.html','./gallery.html','./log.html','./weather.html','./transport.html','./qr.html',
-  './style.css','./app.js','./auth.js','./manifest.webmanifest',
+  './style.css','./app.js','./manifest.webmanifest',
   './assets/icons/icon-192.png','./assets/icons/icon-512.png'
 ];
 
