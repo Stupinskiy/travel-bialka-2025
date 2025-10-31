@@ -1,64 +1,119 @@
 <!doctype html><html lang="ru"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="style.css">
-<title>Татры · Ноябрь 2025 — Главная</title>
-<meta name="theme-color" content="#1e40af">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Задать пароль — Татры 2025</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .mono{font:600 12px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px;word-break:break-all}
+  .row{display:flex;gap:8px;flex-wrap:wrap}
+  .ok{color:#16a34a}.bad{color:#dc2626}
+</style>
 </head><body>
-
-<!-- Splash -->
-<div id="splash">
-  <div class="logo">TATRY</div>
-  <div class="sub">Загрузка…</div>
-</div>
-
-<header class="nav"><div class="inner container">
-  <div class="brand"><span class="dot"></span>Татры · Ноябрь 2025</div>
-  <nav class="links">
-    <a href="itinerary.html">Маршрут</a>
-    <a href="map.html">Карта</a>
-    <a href="checklists.html">Чек-листы</a>
-    <a href="bookings.html">Бронирования</a>
-    <a href="transport.html">Транспорт</a>
-    <a href="weather.html">Погода</a>
-    <a href="log.html">Дневник</a>
-    <a href="gallery.html">Галерея</a>
-    <a href="qr.html">QR</a>
-  </nav>
-</div></header>
-
 <main class="container hero">
-  <div class="grid">
-    <section class="card">
-      <div class="h1">Białka Tatrzańska & Zakopane</div>
-      <p class="p">Период: <b>31.10.2025—09.11.2025</b>. Баланс: 50% релакс · 30% прогулки · 20% кухня/культура.</p>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
-        <a class="btn" href="itinerary.html">Смотреть маршрут</a>
-        <a class="btn secondary" href="map.html">Карта точек</a>
-        <button id="installBtn" class="btn" style="display:none" onclick="installPWA()">Установить на телефон</button>
-      </div>
-    </section>
+  <div class="card" style="max-width:720px;margin:0 auto">
+    <div class="h1">Задать пароль для сайта</div>
+    <p class="p">Эта страница временная. Введи новый пароль, получи его SHA-256, скачай обновлённый <b>auth.js</b>, замени файл в репозитории и <b>удали</b> эту страницу.</p>
 
-    <section class="card">
-      <div class="h2">D-Day ключевых дней</div>
-      <div class="dday" data-date="2025-10-31"><span class="num">—</span><span class="label">дн. осталось</span>&nbsp;до заезда в Białka</div>
-      <div class="dday" data-date="2025-11-03"><span class="num">—</span><span class="label">дн. осталось</span>&nbsp;до переезда в Zakopane</div>
-      <div class="dday" data-date="2025-11-04"><span class="num">—</span><span class="label">дн. осталось</span>&nbsp;до Morskie Oko</div>
-      <div class="dday" data-date="2025-11-09"><span class="num">—</span><span class="label">дн. осталось</span>&nbsp;до выезда</div>
-    </section>
+    <label>Новый пароль</label>
+    <input id="pwd1" type="password" placeholder="Например: Bialka2025!" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:10px;margin:6px 0 12px">
 
-    <section class="card">
-      <div class="h2">Адреса</div>
-      <div><span class="badge">Białka</span></div>
-      <div id="addr1">Grapa 29, 34-405 Białka Tatrzańska</div>
-      <button class="btn secondary" id="addr1-badge" onclick="copyText('addr1')">Скопировать</button>
-      <hr>
-      <div><span class="badge">Zakopane</span></div>
-      <div id="addr2">Willa Nosalowa Dolina (03—05.11)</div>
-      <button class="btn secondary" id="addr2-badge" onclick="copyText('addr2')">Скопировать</button>
-    </section>
+    <label>Повтор пароля</label>
+    <input id="pwd2" type="password" placeholder="Повтори пароль" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:10px;margin:6px 0 12px">
+
+    <div class="row">
+      <button class="btn" id="calc">Сгенерировать SHA-256</button>
+      <button class="btn secondary" id="dl" disabled>Скачать auth.js</button>
+    </div>
+
+    <hr>
+    <div class="h2">Результат</div>
+    <div id="status" class="p"></div>
+    <div class="mono" id="hash">—</div>
+
+    <div class="h2" style="margin-top:16px">Фрагмент для auth.js</div>
+    <pre class="mono" id="snippet">
+// auth.js — пароль задан через set-password.html
+const PASSWORD_SHA256 = "…";
+const PASS_KEY = "travel.pass.ok";
+
+async function sha256(text){
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+(function(){
+  const onLogin = location.pathname.endsWith("login.html");
+  if (!localStorage.getItem(PASS_KEY) && !onLogin) location.href = "login.html";
+})();
+    </pre>
+
+    <details style="margin-top:12px">
+      <summary class="p"><b>Дополнительно:</b> подсказать новую версию кэша SW</summary>
+      <p class="p">Чтобы PWA точно подтянула новый пароль, увеличь версию кэша в <code>sw.js</code>.</p>
+      <div class="mono" id="swver">// sw.js
+const CACHE = 'travel-bialka-2025-vX';</div>
+    </details>
   </div>
 </main>
 
-<footer class="container">Сайт поездки · PWA · офлайн · тёмная тема</footer>
-<script src="auth.js" defer></script><script src="app.js" defer></script>
+<script>
+async function sha256(text){
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+const calcBtn = document.getElementById('calc');
+const dlBtn   = document.getElementById('dl');
+const st      = document.getElementById('status');
+const outHash = document.getElementById('hash');
+const snip    = document.getElementById('snippet');
+
+calcBtn.addEventListener('click', async ()=>{
+  const a = document.getElementById('pwd1').value;
+  const b = document.getElementById('pwd2').value;
+  if (!a || !b){ st.innerHTML = 'Введите пароль дважды.'; st.className = 'p bad'; return; }
+  if (a !== b){ st.innerHTML = 'Пароли не совпадают.'; st.className = 'p bad'; return; }
+  if (a.length < 8){ st.innerHTML = 'Пароль слишком короткий (минимум 8).'; st.className = 'p bad'; return; }
+
+  const h = await sha256(a);
+  outHash.textContent = h;
+  st.innerHTML = 'Хэш сгенерирован. Скачай обновлённый <b>auth.js</b> и замени в репозитории.'; st.className = 'p ok';
+
+  const content = `// auth.js — пароль задан через set-password.html
+const PASSWORD_SHA256 = "${h}";
+const PASS_KEY = "travel.pass.ok";
+
+async function sha256(text){
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+(function(){
+  const onLogin = location.pathname.endsWith("login.html");
+  if (!localStorage.getItem(PASS_KEY) && !onLogin) location.href = "login.html";
+})();\n`;
+
+  snip.textContent = content;
+
+  // enable download
+  dlBtn.disabled = false;
+  dlBtn.onclick = ()=>{
+    const blob = new Blob([content], {type:'text/javascript;charset=utf-8'});
+    const url  = URL.createObjectURL(blob);
+    const aEl  = document.createElement('a');
+    aEl.href = url;
+    aEl.download = 'auth.js';
+    document.body.appendChild(aEl);
+    aEl.click();
+    aEl.remove();
+    URL.revokeObjectURL(url);
+  };
+
+  // suggest SW version bump
+  const swEl = document.getElementById('swver');
+  const rnd = Math.floor(1000 + Math.random()*9000);
+  swEl.textContent = `// sw.js
+const CACHE = 'travel-bialka-2025-v${rnd}';`;
+});
+</script>
 </body></html>
