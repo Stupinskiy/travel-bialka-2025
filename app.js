@@ -8,16 +8,14 @@ let deferredPrompt;
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
-  const btn = document.querySelector('#installBtn');
-  if (btn) btn.style.display = 'inline-block';
+  document.querySelectorAll('#installBtn, #installHome').forEach(btn=>btn.style.display='inline-block');
 });
 async function installPWA(){
   if (!deferredPrompt) return;
   deferredPrompt.prompt();
   await deferredPrompt.userChoice;
   deferredPrompt = null;
-  const btn = document.querySelector('#installBtn');
-  if (btn) btn.style.display = 'none';
+  document.querySelectorAll('#installBtn, #installHome').forEach(btn=>btn.style.display='none');
 }
 window.installPWA = installPWA;
 

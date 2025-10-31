@@ -8,7 +8,7 @@
 
 <header class="nav"><div class="inner container">
   <div class="brand"><span class="dot"></span>Face ID</div>
-  <nav><a href="index.html">Назад</a><a href="face.html">Face ID</a></nav>
+  <nav><a href="home.html">Назад</a><a href="face.html">Face ID</a></nav>
 </div></header>
 
 <main class="container hero">
@@ -61,7 +61,7 @@ unlockBtn.onclick = async ()=>{
     await FaceLock.faceUnlock();
     document.getElementById('unlockMsg').textContent = 'Разблокировано.';
     // вернуться на главную после входа
-    setTimeout(()=> location.href='index.html', 300);
+    setTimeout(()=> location.href='home.html', 300);
   }catch(e){
     document.getElementById('unlockMsg').textContent = 'Ошибка: ' + (e.message||e);
   }

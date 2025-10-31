@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="style.css">
+<title>Tatry 2025 · Панель</title>
+<style>
+  .link-card{display:block;text-decoration:none;color:inherit;transition:transform .15s ease,box-shadow .15s ease}
+  .link-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(15,23,42,.12)}
+  .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
+  .actions .btn{flex:1 1 180px;text-align:center}
+  @media(max-width:640px){
+    .actions .btn{flex:1 1 100%}
+  }
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="inner container">
+    <div class="brand"><span class="dot"></span>Tatry 2025</div>
+    <nav>
+      <a href="face.html">Face ID</a>
+      <a href="index.html" id="logoutBtn">Выйти</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container hero">
+  <section class="card" style="margin-bottom:24px">
+    <div class="h1" style="margin-bottom:12px">Привет! Готовы к поездке в Татры.</div>
+    <p class="p">Здесь собраны все материалы: план по дням, бронирования, транспорт, погода и заметки. Используй быстрые карточки, чтобы перейти к нужной странице.</p>
+    <div class="actions">
+      <button class="btn" onclick="location.href='itinerary.html'">Маршрут</button>
+      <button class="btn secondary" onclick="window.installPWA && window.installPWA()" id="installHome" style="display:none">Установить как приложение</button>
+    </div>
+  </section>
+
+  <section class="grid" style="margin-bottom:24px">
+    <a class="card link-card" href="itinerary.html">
+      <div class="h2">Маршрут</div>
+      <p class="p">План по дням и D-Day счётчики.</p>
+    </a>
+    <a class="card link-card" href="bookings.html">
+      <div class="h2">Бронирования</div>
+      <p class="p">Отели, контакты и подтверждения.</p>
+    </a>
+    <a class="card link-card" href="transport.html">
+      <div class="h2">Транспорт</div>
+      <p class="p">Авиабилеты, трансферы и прокат.</p>
+    </a>
+    <a class="card link-card" href="weather.html">
+      <div class="h2">Погода</div>
+      <p class="p">Температура, одежда и чек-лист.</p>
+    </a>
+    <a class="card link-card" href="map.html">
+      <div class="h2">Карта</div>
+      <p class="p">Оффлайн-точки и маршруты.</p>
+    </a>
+    <a class="card link-card" href="gallery.html">
+      <div class="h2">Галерея</div>
+      <p class="p">Вдохновение и места силы.</p>
+    </a>
+    <a class="card link-card" href="log.html">
+      <div class="h2">Дневник</div>
+      <p class="p">Записывай впечатления каждый день.</p>
+    </a>
+    <a class="card link-card" href="checklists.html">
+      <div class="h2">Чек-листы</div>
+      <p class="p">Сборы, документы и must-have.</p>
+    </a>
+    <a class="card link-card" href="qr.html">
+      <div class="h2">QR &amp; доступ</div>
+      <p class="p">Быстрый QR-код для команды.</p>
+    </a>
+  </section>
+
+  <section class="grid">
+    <div class="card">
+      <div class="h2">До вылета</div>
+      <div class="dday" data-date="2025-10-31">
+        <span class="num">—</span>
+        <span class="label">дн. осталось</span>
+      </div>
+      <p class="p">Напоминание: собраться и проверить документы минимум за день до старта.</p>
+    </div>
+    <div class="card">
+      <div class="h2">Полезные действия</div>
+      <ul class="p" style="list-style:disc;padding-left:20px">
+        <li>Добавить сайт на главный экран (кнопка выше).</li>
+        <li>Включить Face ID для быстрого доступа.</li>
+        <li>Проверить бронирования и время трансферов.</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="container">Tatry 2025 · всё под рукой</footer>
+
+<script src="auth.js"></script>
+<script src="webauthn.js"></script>
+<script src="app.js" defer></script>
+<script>
+  const logoutBtn = document.getElementById('logoutBtn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      localStorage.removeItem(PASS_KEY);
+      location.href = 'index.html';
+    });
+  }
+  window.addEventListener('beforeinstallprompt', () => {
+    const btn = document.getElementById('installHome');
+    if (btn) btn.style.display = 'inline-block';
+  });
+</script>
+</body>
+</html>
