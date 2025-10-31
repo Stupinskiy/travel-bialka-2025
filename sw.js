@@ -1,9 +1,9 @@
-const CACHE = 'travel-bialka-2025-v5';
+const CACHE = 'travel-bialka-2025-v6';
 const CORE = [
   './',
   './index.html','./itinerary.html','./map.html','./checklists.html',
-  './bookings.html','./gallery.html','./log.html','./weather.html','./transport.html','./qr.html',
-  './style.css','./app.js','./manifest.webmanifest',
+  './bookings.html','./gallery.html','./log.html','./weather.html','./transport.html','./qr.html','./face.html',
+  './style.css','./app.js','./webauthn.js','./manifest.webmanifest',
   './assets/icons/icon-192.png','./assets/icons/icon-512.png'
 ];
 
@@ -20,11 +20,7 @@ self.addEventListener('fetch', e=>{
   if (url.origin === location.origin) {
     e.respondWith(caches.match(e.request).then(r=> r || fetch(e.request)));
   } else {
-    // network-first for external services (e.g. weather API or QR image)
-    e.respondWith(fetch(e.request).then(resp=>{
-      const copy = resp.clone();
-      caches.open(CACHE).then(c=>c.put(e.request, copy));
-      return resp;
-    }).catch(()=>caches.match(e.request)));
+    e.respondWith(fetch(e.request).catch(()=>caches.match(e.request)));
   }
 });
+
