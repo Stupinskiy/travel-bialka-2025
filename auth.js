@@ -9,8 +9,8 @@ async function sha256(text){
 
 (function(){
   const here = location.pathname.split('/').pop() || '';
-  const onLogin = here === 'login.html';
+  const onLogin = here === '' || here === 'index.html' || here === 'login.html';
   if (!localStorage.getItem(PASS_KEY) && !onLogin){
-    location.href = 'login.html';
+    location.href = 'index.html';
   }
 })();
