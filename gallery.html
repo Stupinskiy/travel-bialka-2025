@@ -1,0 +1,35 @@
+<!doctype html><html lang="ru"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="style.css">
+<title>Галерея</title>
+</head><body>
+<header class="nav"><div class="inner container">
+  <div class="brand"><span class="dot"></span>Галерея</div>
+  <a href="index.html">Назад</a>
+</div></header>
+
+<main class="container hero">
+<h1 class="h1">Галерея</h1>
+<p class="p">Добавь фото в <code>assets/photos</code>, затем обнови страницу.</p>
+
+<div id="gal" class="grid"></div>
+</main>
+
+<script>
+// вручную укажешь названия файлов
+const photos = ["01.jpg","02.jpg","03.jpg"];
+const root = "assets/photos/";
+const g = document.getElementById("gal");
+
+photos.forEach(n=>{
+  const card = document.createElement("div");
+  card.className="card";
+  const img = document.createElement("img");
+  img.src=root+n; img.style.width="100%"; img.style.borderRadius="10px";
+  card.append(img);
+  g.append(card);
+});
+</script>
+
+<script src="auth.js"></script><script src="app.js"></script>
+</body></html>
