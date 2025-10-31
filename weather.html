@@ -1,0 +1,46 @@
+<!doctype html><html lang="ru"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="style.css">
+<title>Погода</title>
+</head><body>
+
+<header class="nav"><div class="inner container">
+  <div class="brand"><span class="dot"></span>Погода</div>
+  <a href="index.html">Назад</a>
+</div></header>
+
+<main class="container hero">
+<h1 class="h1">Погода</h1>
+
+<div class="grid">
+
+<section class="card">
+  <div class="h2">Białka Tatrzańska</div>
+  <div id="w1" class="p">Загрузка…</div>
+</section>
+
+<section class="card">
+  <div class="h2">Zakopane</div>
+  <div id="w2" class="p">Загрузка…</div>
+</section>
+
+</div>
+</main>
+
+<script>
+async function meteo(lat,lon){
+  const url=`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=auto`;
+  const r=await fetch(url); const j=await r.json();
+  return j.daily.time.map((t,i)=>
+    `<tr><td>${t}</td><td>${Math.round(j.daily.temperature_2m_min[i])}…${Math.round(j.daily.temperature_2m_max[i])}°C</td><td>${j.daily.precipitation_sum[i]} мм</td></tr>`
+  ).join('');
+}
+(async()=>{
+  document.getElementById("w1").innerHTML = `<table class="table"><tbody>${await meteo(49.386,20.106)}</tbody></table>`;
+  document.getElementById("w2").innerHTML = `<table class="table"><tbody>${await meteo(49.299,19.949)}</tbody></table>`;
+})();
+</script>
+
+<script src="auth.js"></script><script src="app.js"></script>
+</body></html>
