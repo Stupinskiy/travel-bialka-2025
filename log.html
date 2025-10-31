@@ -1,0 +1,66 @@
+<!doctype html><html lang="ru"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="style.css">
+<title>Дневник</title></head><body>
+
+<header class="nav"><div class="inner container">
+  <div class="brand"><span class="dot"></span>Дневник</div>
+  <a href="index.html">Назад</a>
+</div></header>
+
+<main class="container hero">
+<h1 class="h1">Дневник поездки</h1>
+
+<div class="card">
+<label>Дата</label>
+<input id="d" type="date" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:10px;margin:6px 0 12px">
+
+<label>Погода / настроение</label>
+<input id="m" type="text" placeholder="солнечно, бодро" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:10px;margin:6px 0 12px">
+
+<label>Что сделал</label>
+<textarea id="t" rows="5" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:10px"></textarea>
+
+<div style="margin-top:12px;display:flex;gap:8px">
+<button class="btn" onclick="saveEntry()">Сохранить</button>
+<button class="btn secondary" onclick="clearAll()">Очистить всё</button>
+</div>
+</div>
+
+<div id="list" style="margin-top:16px"></div>
+</main>
+
+<script>
+function load(){return JSON.parse(localStorage.getItem("log.entries")||"[]");}
+function store(a){localStorage.setItem("log.entries",JSON.stringify(a));}
+
+function saveEntry(){
+  const d=document.getElementById("d").value||new Date().toISOString().slice(0,10);
+  const m=document.getElementById("m").value;
+  const t=document.getElementById("t").value;
+  const a=load(); a.unshift({d,m,t});
+  store(a); render();
+}
+function del(i){const a=load(); a.splice(i,1); store(a); render();}
+function clearAll(){if(confirm("Удалить все записи?")){localStorage.removeItem("log.entries"); render();}}
+
+function render(){
+  const a=load(); const root=document.getElementById("list"); root.innerHTML="";
+  a.forEach((e,i)=>{
+    const card=document.createElement("div");
+    card.className="card"; card.style.margin="12px 0";
+    card.innerHTML = `
+      <div class="h2">${e.d}</div>
+      <div class="p">${e.m||""}</div>
+      <div style="white-space:pre-wrap">${e.t||""}</div>
+      <div style="margin-top:8px"><button class="btn" onclick="del(${i})">Удалить</button></div>
+    `;
+    root.append(card);
+  });
+}
+render();
+</script>
+
+<script src="auth.js"></script>
+<script src="app.js"></script>
+</body></html>
