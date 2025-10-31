@@ -90,3 +90,15 @@ function copyText(id){
   if(b){ b.textContent = 'Скопировано'; setTimeout(()=>b.textContent='Скопировать',1500); }
 }
 window.copyText = copyText;
+// === Face ID gate ===
+// Если на устройстве включён FaceLock и сессия не разблокирована — отправим на face.html (режим unlock)
+(function(){
+  if (!('credentials' in navigator) || !window.PublicKeyCredential) return; // нет поддержки — пропускаем
+  const here = location.pathname.split('/').pop();
+  const isFacePage = (here === 'face.html');
+  if (typeof FaceLock === 'undefined') return; // webauthn.js не загружен
+  if (FaceLock.faceGateShouldLock() && !isFacePage){
+    location.href = 'face.html';
+  }
+})();
+

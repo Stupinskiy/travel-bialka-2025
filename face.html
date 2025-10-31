@@ -1,0 +1,76 @@
+<!doctype html><html lang="ru"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Face ID · Настройка</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="style.css">
+</head><body>
+
+<header class="nav"><div class="inner container">
+  <div class="brand"><span class="dot"></span>Face ID</div>
+  <nav><a href="index.html">Назад</a><a href="face.html">Face ID</a></nav>
+</div></header>
+
+<main class="container hero">
+  <div class="grid">
+    <section class="card">
+      <div class="h2">Включить Face ID на этом устройстве</div>
+      <p class="p">Создаст локальный Passkey (discoverable). Для входа потребуется Face ID/Touch ID.</p>
+      <button class="btn" id="enrollBtn">Включить Face ID</button>
+      <div id="enrollMsg" class="p" style="margin-top:8px"></div>
+    </section>
+
+    <section class="card">
+      <div class="h2">Разблокировать</div>
+      <p class="p">Если включено — запросить биометрию для входа.</p>
+      <button class="btn secondary" id="unlockBtn">Разблокировать</button>
+      <div id="unlockMsg" class="p" style="margin-top:8px"></div>
+    </section>
+
+    <section class="card">
+      <div class="h2">Отключить Face ID на этом устройстве</div>
+      <button class="btn" id="disableBtn">Выключить Face ID</button>
+      <div id="disableMsg" class="p" style="margin-top:8px"></div>
+    </section>
+  </div>
+</main>
+
+<footer class="container">Face ID · локальная защита</footer>
+
+<script src="webauthn.js"></script>
+<script>
+const enrollBtn = document.getElementById('enrollBtn');
+const unlockBtn = document.getElementById('unlockBtn');
+const disableBtn = document.getElementById('disableBtn');
+
+enrollBtn.onclick = async ()=>{
+  try{
+    if (!('credentials' in navigator) || !window.PublicKeyCredential){
+      alert('Браузер не поддерживает WebAuthn/Passkeys'); return;
+    }
+    await FaceLock.faceEnroll();
+    document.getElementById('enrollMsg').textContent = 'Готово: Face ID включён на этом устройстве.';
+  }catch(e){
+    document.getElementById('enrollMsg').textContent = 'Ошибка: ' + (e.message||e);
+  }
+};
+
+unlockBtn.onclick = async ()=>{
+  try{
+    await FaceLock.faceUnlock();
+    document.getElementById('unlockMsg').textContent = 'Разблокировано.';
+    // вернуться на главную после входа
+    setTimeout(()=> location.href='index.html', 300);
+  }catch(e){
+    document.getElementById('unlockMsg').textContent = 'Ошибка: ' + (e.message||e);
+  }
+};
+
+disableBtn.onclick = ()=>{
+  FaceLock.faceDisable();
+  document.getElementById('disableMsg').textContent = 'Face ID выключен на этом устройстве.';
+};
+</script>
+<script src="app.js" defer></script>
+</body></html>
+
