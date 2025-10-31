@@ -1,28 +1,64 @@
 <!doctype html><html lang="ru"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="style.css">
-<title>Татры 2025</title></head><body>
+<title>Татры · Ноябрь 2025 — Главная</title>
+<meta name="theme-color" content="#1e40af">
+</head><body>
+
+<!-- Splash -->
+<div id="splash">
+  <div class="logo">TATRY</div>
+  <div class="sub">Загрузка…</div>
+</div>
+
 <header class="nav"><div class="inner container">
   <div class="brand"><span class="dot"></span>Татры · Ноябрь 2025</div>
-  <nav>
+  <nav class="links">
     <a href="itinerary.html">Маршрут</a>
     <a href="map.html">Карта</a>
     <a href="checklists.html">Чек-листы</a>
     <a href="bookings.html">Бронирования</a>
+    <a href="transport.html">Транспорт</a>
     <a href="weather.html">Погода</a>
     <a href="log.html">Дневник</a>
     <a href="gallery.html">Галерея</a>
+    <a href="qr.html">QR</a>
   </nav>
 </div></header>
 
 <main class="container hero">
-<div class="card">
-  <h1 class="h1">Białka & Zakopane</h1>
-  <p class="p">31.10.2025 — 09.11.2025</p>
-  <button id="installBtn" class="btn secondary" style="display:none" onclick="installPWA()">Установить на телефон</button>
-</div>
+  <div class="grid">
+    <section class="card">
+      <div class="h1">Białka Tatrzańska & Zakopane</div>
+      <p class="p">Период: <b>31.10.2025—09.11.2025</b>. Баланс: 50% релакс · 30% прогулки · 20% кухня/культура.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+        <a class="btn" href="itinerary.html">Смотреть маршрут</a>
+        <a class="btn secondary" href="map.html">Карта точек</a>
+        <button id="installBtn" class="btn" style="display:none" onclick="installPWA()">Установить на телефон</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="h2">D-Day ключевых дней</div>
+      <div class="dday" data-date="2025-10-31"><span class="num">—</span><span class="label">дн. осталось</span>&nbsp;до заезда в Białka</div>
+      <div class="dday" data-date="2025-11-03"><span class="num">—</span><span class="label">дн. осталось</span>&nbsp;до переезда в Zakopane</div>
+      <div class="dday" data-date="2025-11-04"><span class="num">—</span><span class="label">дн. осталось</span>&nbsp;до Morskie Oko</div>
+      <div class="dday" data-date="2025-11-09"><span class="num">—</span><span class="label">дн. осталось</span>&nbsp;до выезда</div>
+    </section>
+
+    <section class="card">
+      <div class="h2">Адреса</div>
+      <div><span class="badge">Białka</span></div>
+      <div id="addr1">Grapa 29, 34-405 Białka Tatrzańska</div>
+      <button class="btn secondary" id="addr1-badge" onclick="copyText('addr1')">Скопировать</button>
+      <hr>
+      <div><span class="badge">Zakopane</span></div>
+      <div id="addr2">Willa Nosalowa Dolina (03—05.11)</div>
+      <button class="btn secondary" id="addr2-badge" onclick="copyText('addr2')">Скопировать</button>
+    </section>
+  </div>
 </main>
 
-<footer class="container">PWA · Татры 2025</footer>
-<script src="auth.js"></script><script src="app.js"></script>
+<footer class="container">Сайт поездки · PWA · офлайн · тёмная тема</footer>
+<script src="auth.js" defer></script><script src="app.js" defer></script>
 </body></html>
