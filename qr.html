@@ -1,0 +1,48 @@
+<!doctype html><html lang="ru"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="style.css">
+<title>QR-код доступа</title>
+</head><body>
+
+<header class="nav"><div class="inner container">
+  <div class="brand"><span class="dot"></span>QR · Доступ</div>
+  <nav><a href="index.html">Назад</a></nav>
+</div></header>
+
+<main class="container hero">
+  <div class="grid">
+    <section class="card">
+      <div class="h2">QR-код сайта</div>
+      <p class="p">Сгенерируй QR на свой домен/страницу входа (например, <code>https://твойдомен/login.html</code>).</p>
+      <label>URL</label>
+      <input id="qrurl" type="url" placeholder="https://example.com/login.html" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:10px;margin:6px 0 12px">
+      <button class="btn" onclick="makeQR()">Сгенерировать</button>
+      <hr>
+      <div id="qrwrap" style="display:flex;justify-content:center;align-items:center;min-height:240px"></div>
+      <p class="p">Поделиться: сохраните изображение или распечатайте.</p>
+    </section>
+
+    <section class="card">
+      <div class="h2">Стартовый экран (Splash)</div>
+      <p class="p">PWA уже показывает кастомный сплэш при запуске. Чтобы был фирменный фон/логотип — обнови цвет в <code>manifest.webmanifest</code> и иконки в <code>assets/icons</code>.</p>
+      <ul class="p">
+        <li><b>theme_color</b> управляет цветом системы.</li>
+        <li>iOS использует иконку и фон из системы (мы показываем собственный оверлей).</li>
+      </ul>
+    </section>
+  </div>
+</main>
+
+<footer class="container">QR · шэринг</footer>
+<script>
+function makeQR(){
+  const u = document.getElementById('qrurl').value.trim();
+  if(!u){ alert('Укажи URL'); return; }
+  const api = 'https://api.qrserver.com/v1/create-qr-code/?size=512x512&data=' + encodeURIComponent(u);
+  const img = new Image(); img.src = api; img.alt = 'QR'; img.style.maxWidth='260px'; img.style.width='100%'; img.style.borderRadius='12px';
+  const wrap = document.getElementById('qrwrap'); wrap.innerHTML=''; wrap.appendChild(img);
+}
+</script>
+<script src="auth.js" defer></script><script src="app.js" defer></script>
+</body></html>
