@@ -36,12 +36,13 @@ async function meteo(lat,lon){
   const url=`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=auto`;
   const r=await fetch(url); const j=await r.json();
   return j.daily.time.map((t,i)=>
-    `<tr><td>${t}</td><td>${Math.round(j.daily.temperature_2m_min[i])}…${Math.round(j.daily.temperature_2m_max[i])}°C</td><td>${j.daily.precipitation_sum[i]} мм</td></tr>`
+    `<tr><td data-label="Дата">${t}</td><td data-label="Температура">${Math.round(j.daily.temperature_2m_min[i])}…${Math.round(j.daily.temperature_2m_max[i])}°C</td><td data-label="Осадки">${j.daily.precipitation_sum[i]} мм</td></tr>`
   ).join('');
 }
 (async()=>{
-  document.getElementById("w1").innerHTML = `<div class="table-responsive"><table class="table"><tbody>${await meteo(49.386,20.106)}</tbody></table></div>`;
-  document.getElementById("w2").innerHTML = `<div class="table-responsive"><table class="table"><tbody>${await meteo(49.299,19.949)}</tbody></table></div>`;
+  const header=`<thead><tr><th scope="col">Дата</th><th scope="col">Температура</th><th scope="col">Осадки</th></tr></thead>`;
+  document.getElementById("w1").innerHTML = `<div class="table-responsive"><table class="table">${header}<tbody>${await meteo(49.386,20.106)}</tbody></table></div>`;
+  document.getElementById("w2").innerHTML = `<div class="table-responsive"><table class="table">${header}<tbody>${await meteo(49.299,19.949)}</tbody></table></div>`;
 })();
 </script>
 
